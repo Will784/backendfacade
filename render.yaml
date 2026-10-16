@@ -1,0 +1,19 @@
+# Render Blueprint: creates the backend web service from this repository.
+services:
+  - type: web
+    name: hotel-facade-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION_MINUTES
+        value: "120"
+      - key: APP_TIMEZONE
+        value: America/Bogota
+      # Set it to the Vercel URL, e.g. https://hotel-facade.vercel.app,https://*.vercel.app
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
